@@ -22,4 +22,5 @@ USER spring:spring
 COPY --from=build /app/target/datn_backend_spring-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Nghe cổng từ biến môi trường PORT (Render) nếu có, ngược lại 8080 (local)
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${PORT:-8080}"]
