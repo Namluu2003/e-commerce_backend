@@ -80,15 +80,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> loginAdmin(LoginRequest request) {
-        Staff staff = staffRepository.findByEmail(request.getEmail());
+        String email = request.getEmail() == null ? null : request.getEmail().trim();
+        String password = request.getPassword() == null ? null : request.getPassword().trim();
+        Staff staff = staffRepository.findByEmail(email);
         if (staff == null) {
             throw new ApiException(ErrorCode.TAIKHOAN_NOT_FOUND);
         }
-        if (passwordEncoder.matches(request.getPassword(), staff.getPassword())) {
+        if (staff.getStatus() == AccountStatus.NGUNG_HOAT_DONG.ordinal()) {
+            throw new RestApiException("Tài khoản nhân viên đã bị vô hiệu hóa! Vui lòng liên hệ với quản trị viên", HttpStatus.BAD_REQUEST);
+        }
+        if (staff.getStatus() == AccountStatus.CHUA_KICH_HOAT.ordinal()) {
+            throw new RestApiException("Tài khoản nhân viên chưa được kích hoạt!", HttpStatus.BAD_REQUEST);
+        }
+        if (passwordEncoder.matches(password, staff.getPassword())) {
             TokenPayload tokenPayload = new TokenPayload();
             tokenPayload.setEmail(staff.getEmail());
             tokenPayload.setId(staff.getId());
-            tokenPayload.setRoleName(staff.getRole().getRoleName());
+            tokenPayload.setRoleName(staff.getRole() != null ? staff.getRole().getRoleName() : "ROLE_STAFF");
             UserLoginResponse userLoginResponse = UserLoginResponse.fromStaffEntity(staff);
             return Map.of("token", jwtUtilities.generateToken(tokenPayload), "user", userLoginResponse);
         }
@@ -98,7 +106,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> login(LoginRequest request) {
-        Customer customer = customerRepository.findByEmail(request.getEmail());
+        String email = request.getEmail() == null ? null : request.getEmail().trim();
+        String password = request.getPassword() == null ? null : request.getPassword().trim();
+        Customer customer = customerRepository.findByEmail(email);
         if (customer == null) {
             throw  new RestApiException("Tài khoản không tồn tại", HttpStatus.BAD_REQUEST);
         }
@@ -110,7 +120,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw  new RestApiException("Tài khoản của quý khách chưa được kích hooạt!", HttpStatus.BAD_REQUEST);
         }
 
-        if (passwordEncoder.matches(request.getPassword(), customer.getPassword())) {
+        if (passwordEncoder.matches(password, customer.getPassword())) {
             TokenPayload tokenPayload = new TokenPayload();
             tokenPayload.setEmail(customer.getEmail());
             tokenPayload.setId(customer.getId());
@@ -129,24 +139,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public Boolean register(RegisterRequest request) {
-        if (staffRepository.findByEmail(request.getEmail()) != null) {
+        String email = request.getEmail() == null ? null : request.getEmail().trim();
+        String fullName = request.getFullName() == null ? null : request.getFullName().trim();
+        String password = request.getPassword() == null ? null : request.getPassword().trim();
+        if (staffRepository.findByEmail(email) != null) {
             throw new RestApiException( "Email đã tồn tại", HttpStatus.BAD_REQUEST);
         }
 
-        boolean existsCustomerByEmail = customerRepository.existsCustomerByEmail(request.getEmail());
+        boolean existsCustomerByEmail = customerRepository.existsCustomerByEmail(email);
         if (existsCustomerByEmail) {
             throw new ApiException(ErrorCode.ACCOUNT_EMAIL_EXISTED);
         }
         String token = UUID.randomUUID().toString();
         Customer customer = new Customer();
         customer.setStatus(2);  // 2 là chưa kích hoạt
-        customer.setEmail(request.getEmail());
-        customer.setFullName(request.getFullName());
+        customer.setEmail(email);
+        customer.setFullName(fullName);
         customer.setTokenActiveAccount(token);
-        customer.setPassword(passwordEncoder.encode(request.getPassword()));
+        customer.setPassword(passwordEncoder.encode(password));
         customerRepository.save(customer);
         // Gửi email ở luồng riêng biệt
-        emailService.sendRegistrationEmail(request.getEmail(), token);
+        emailService.sendRegistrationEmail(email, token);
 
         return true;
     }
@@ -154,6 +167,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public Boolean forgotPassword(String email) {
+        email = email == null ? null : email.trim();
         boolean existsCustomerByEmail = customerRepository.existsCustomerByEmail(email);
         if (!existsCustomerByEmail) {
             throw new RestApiException("Email không tồn tại!", HttpStatus.BAD_REQUEST);
@@ -192,6 +206,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Boolean forgotAdminPassword(String email) {
+        email = email == null ? null : email.trim();
         Staff staff = staffRepository.findByEmail(email);
         if (staff == null) {
             throw new RestApiException("Email không tồn tại. Vui lòng kiểm tra lại!", HttpStatus.BAD_REQUEST);
