@@ -98,8 +98,8 @@ public class GenHoaDon {
             fShoes.setSpacingAfter(10f);
             document.add(fShoes);
 
-            Paragraph contactInfo = new Paragraph("Số điện thoại: 0357345935", normalFont);
-            Paragraph contactInfo2 = new Paragraph("Email: thehandsshoesweb@gmail.com", normalFont);
+            Paragraph contactInfo = new Paragraph("Số điện thoại: 0335867600", normalFont);
+            Paragraph contactInfo2 = new Paragraph("Email: tamdaonui198@gmail.com", normalFont);
             Paragraph contactInfo3 = new Paragraph("Địa chỉ: Tòa nhà FPT Polytechnic, đường Trịnh Văn Bô, Phương Canh, Nam Từ Liêm, Hà Nội ", normalFont);
             contactInfo.setAlignment(Element.ALIGN_CENTER);
             contactInfo2.setAlignment(Element.ALIGN_CENTER);

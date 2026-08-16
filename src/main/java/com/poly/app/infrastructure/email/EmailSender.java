@@ -21,7 +21,7 @@ public class EmailSender {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Value("vietne263204@gmail.com")
+    @Value("tamdaonui198@gmail.com")
 
     private String sender;
 

@@ -939,7 +939,7 @@ public class ClientServiceImpl implements ClientService {
                                    ✅ Xác Minh Đơn Hàng
                                 </a>
                                 <p style="margin-top: 25px; color: #e74c3c; font-size: 14px; font-style: italic;">Lưu ý: Nếu không xác minh trong 24 giờ, đơn hàng có thể bị hủy.</p>
-                                <p style="margin-top: 15px; font-size: 12px; color: #999; line-height: 1.4;">Nếu bạn không đặt đơn hàng này, vui lòng bỏ qua email hoặc liên hệ hỗ trợ qua <a href='mailto:support@thehands.com' style='color: #007bff;'>support@thehands.com</a>.</p>
+                                <p style="margin-top: 15px; font-size: 12px; color: #999; line-height: 1.4;">Nếu bạn không đặt đơn hàng này, vui lòng bỏ qua email hoặc liên hệ hỗ trợ qua <a href='mailto:tamdaonui198@gmail.com' style='color: #007bff;'>tamdaonui198@gmail.com</a>.</p>
                             </div>
                         </body>
                         </html>
@@ -974,7 +974,7 @@ public class ClientServiceImpl implements ClientService {
                                 <p style="color: #555; font-size: 16px;"><strong>🧾 Mã đơn hàng:</strong> <span style="color: #e74c3c; font-weight: bold;">%s</span></p>
                                 <hr style="border: none; border-top: 1px dashed #ddd; margin: 25px 0;">
                                 <p style="color: #666; font-size: 16px; line-height: 1.5;">Nếu bạn cần hỗ trợ hoặc muốn đặt lại đơn hàng, vui lòng liên hệ với chúng tôi.</p>
-                                <a href="mailto:support@thehands.com" 
+                                <a href="mailto:tamdaonui198@gmail.com" 
                                    style="display: inline-block; background-color: #28a745; color: #ffffff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background-color 0.3s;">
                                    📩 Liên Hệ Hỗ Trợ
                                 </a>
@@ -1012,7 +1012,7 @@ public class ClientServiceImpl implements ClientService {
                                 <p style="color: #555; font-size: 16px;"><strong>🧾 Mã đơn hàng:</strong> <span style="color: #e74c3c; font-weight: bold;">%s</span></p>
                                 <hr style="border: none; border-top: 1px dashed #ddd; margin: 25px 0;">
                                 <p style="color: #666; font-size: 16px; line-height: 1.5;">Nếu bạn cần hỗ trợ hoặc muốn đặt lại đơn hàng, vui lòng liên hệ với chúng tôi.</p>
-                                <a href="mailto:support@thehands.com" 
+                                <a href="mailto:tamdaonui198@gmail.com" 
                                    style="display: inline-block; background-color: #28a745; color: #ffffff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background-color 0.3s;">
                                    📩 Liên Hệ Hỗ Trợ
                                 </a>
