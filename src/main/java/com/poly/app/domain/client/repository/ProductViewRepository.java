@@ -105,7 +105,6 @@ public interface ProductViewRepository extends JpaRepository<ProductDetail, Inte
                     "LEFT JOIN color c ON pd.color_id = c.id " +
                     "LEFT JOIN gender g ON pd.gender_id = g.id " +
                     "WHERE p.status = 0 AND pd.status = 0 " +
-                    "AND FROM_UNIXTIME(pd.updated_at / 1000) BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() " +
                     "GROUP BY p.id, p.product_name, c.color_name, g.gender_name " +
                     "ORDER BY sold DESC",
             countQuery = "SELECT COUNT(*) FROM ( " +
@@ -115,7 +114,6 @@ public interface ProductViewRepository extends JpaRepository<ProductDetail, Inte
                          "LEFT JOIN color c ON pd.color_id = c.id " +
                          "LEFT JOIN gender g ON pd.gender_id = g.id " +
                          "WHERE p.status = 0 AND pd.status = 0 " +
-                         "AND FROM_UNIXTIME(pd.updated_at / 1000) BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() " +
                          "GROUP BY p.id, p.product_name, c.color_name, g.gender_name " +
                          ") AS tmp",
             nativeQuery = true
